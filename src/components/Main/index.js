@@ -1,17 +1,30 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
+import Drawer from 'react-native-drawer'
 
+import Menu from "./Menu";
+import Shop from "./Shop";
 
 export default class Main extends Component {
+
+  closeControlPanel = () => {
+    this.drawer.close()
+  };
+  openControlPanel = () => {
+    this.drawer.open()
+  };
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Main Component</Text>
-        <TouchableOpacity onPress={() => {this.props.navigation.navigate("AUTHENTICATION")}}>
-          <Text>Go to Authentication</Text>
-        </TouchableOpacity>
-      </View>
+      <Drawer
+        ref={(ref) => { this.drawer = ref }}
+        content={<Menu navigation={this.props.navigation} />}
+        openDrawerOffset={0.4}
+        tapToClose={true}
+      >
+        <Shop open={this.openControlPanel.bind(this)} />
+      </Drawer>
     );
   }
 }
